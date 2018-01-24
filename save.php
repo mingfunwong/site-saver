@@ -35,7 +35,6 @@ function mk_dir($dir, $mode = 0755)
 /**
 * 获得数组指定键的值
 *
-* @access global
 * @param array,object $array
 * @param string $key
 * @param mixed $default
