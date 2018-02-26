@@ -11,7 +11,7 @@ if (file_exists($fullpath)) {
 }
 
 $target_url = "{$site_url}{$redirect_url}";
-$contents = file_get_contents($target_url);
+$contents = curl($target_url);
 $contents = str_replace($site_url, "", $contents);
 mk_dir(".{$dirname}");
 file_put_contents("{$fullpath}", $contents);
@@ -48,3 +48,28 @@ function from($array, $key, $default = FALSE)
 
 	return $return;
 } 
+
+// curl 数据
+function curl($url, $method = "GET", $data = ''){
+    $ch = curl_init(); 
+    curl_setopt($ch, CURLOPT_URL, $url); 
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE); 
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; MSIE 5.01; Windows NT 5.0)');
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+    curl_setopt($ch, CURLOPT_AUTOREFERER, 1); 
+
+    if ($data) {
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    }
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+    $info = curl_exec($ch);
+    if (curl_errno($ch)) {
+        echo 'Errno'.curl_error($ch);
+    }
+    curl_close($ch);
+    return $info;
+}
