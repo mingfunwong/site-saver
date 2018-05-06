@@ -1,4 +1,7 @@
 <?php 
+error_reporting(0);
+set_time_limit(60);
+
 $site_url = 'http://www.swiper.com.cn';
 $redirect_url = from($_SERVER, 'REDIRECT_URL');
 $pathinfo = pathinfo($redirect_url);
