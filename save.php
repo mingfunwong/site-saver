@@ -62,6 +62,7 @@ function curl($url, $method = "GET", $data = ''){
     curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; MSIE 5.01; Windows NT 5.0)');
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
     curl_setopt($ch, CURLOPT_AUTOREFERER, 1); 
+    curl_setopt($ch, CURLOPT_TIMEOUT, 60); 
 
     if ($data) {
         curl_setopt($ch, CURLOPT_POST, 1);
