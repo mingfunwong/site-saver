@@ -18,11 +18,15 @@ if (file_exists($fullpath)) {
 $target_url = "{$site_url}{$redirect_url}";
 $contents = curl($target_url);
 $contents = str_replace($site_url, "", $contents);
-mk_dir(".{$dirname}");
 if ($contents) {
   header('HTTP/1.1 200 OK');
+  $ext = pathinfo($fullpath, PATHINFO_EXTENSION);
+  if (!$ext) {
+    $fullpath = "{$fullpath}/index.html";
+  } 
+  mk_dir(pathinfo($fullpath, PATHINFO_DIRNAME));
   file_put_contents("{$fullpath}", $contents);
-  header('Content-type: ' . mime_content_type($fullpath));
+  header("Content-type: " . mime_content_type($fullpath));
 }
 exit($contents);
 
